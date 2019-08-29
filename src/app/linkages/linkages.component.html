@@ -1,0 +1,96 @@
+<fieldset title="Linkages">
+  <legend style="">Link</legend>
+  <form class="entry-form" [formGroup]="linkForm" (ngSubmit)="link()">
+    <hr color="rgb(71, 71, 71)">
+      <h2 class="linkage">Linkage Information</h2>
+    <hr color="rgb(71, 71, 71)">
+    <table>
+    <tr><td style="width: 40%"><h3> Linkage Type:</h3></td> <td><select [(ngModel)]="selectedType" name="type" formControlName="linkType" required>
+        <option *ngFor="let type of linkageTypes" value={{type.type}}>{{type.type}}</option>
+      </select></td></tr>
+    <tr><td style="width: 40%"> <h3> Confidence Level: </h3> </td> <td><select [(ngModel)]="confidenceLevel" name="confidenceLevel"  formControlName="confLevel" required>
+        <option value="Confirmed - 100%">Confirmed - 100%</option>
+        <option value="Presumed - 75%">Presumed - 75%</option>
+        <option value="Presumed - 50%">Presumed - 50%</option>
+        <option value="Presumed - 25%">Presumed - 25%</option>
+      </select>
+    </td></tr>
+  </table>
+    
+      <hr color="rgb(71, 71, 71)">
+        <h2 class="linkage">Program A</h2>
+      <hr color="rgb(71, 71, 71)">
+      <table class="linkage" >
+      <tr>
+        <td style="width: 40%"><h3 class="linkage">Program Name: </h3></td>
+        <td class="linkage">
+          <select name="sm1" [(ngModel)]="selectedProgram1" formControlName="program1" required>
+            <option *ngFor="let program of programs" value={{program.name}}>{{program.name}}</option>
+          </select>
+        </td>
+      </tr>
+      <tr class="linkage">
+        <td style="width: 40%"><h3 class="linkage">Key Type:</h3></td>
+        <td class="linkage">
+          <select name="kt1" [(ngModel)]="keyType1" formControlName="type1" required>
+            <option *ngFor="let type of keyTypes" value={{type.type}}>{{type.type}}</option>
+          </select>
+        </td>
+      </tr>
+      <tr class="linkage">
+        <td style="width: 40%"><h3 class="linkage">Security ID:</h3></td>
+        <td class="linkage">
+          <input [(ngModel)]="securityID1" name="sid1" class="linkage" (input)="securityID1=formatInput(securityID1,keyType1)" formControlName="key1" required minlength="9" >
+        </td>
+      </tr>
+    </table>
+      <hr color="rgb(71, 71, 71)">
+      <h2  class="linkage">Program B</h2>
+      <hr color="rgb(71, 71, 71)">
+      <table class="linkage" >
+      <tr class="linkage">
+        <td style="width: 40%"><h3 class="linkage">Program Name: </h3></td>
+        <td class="linkage">
+          <select name="sm2" [(ngModel)]="selectedProgram2" formControlName="program2" required>
+            <option *ngFor="let program of programs" value={{program.name}}>{{program.name}}</option>
+          </select>
+        </td>
+      </tr>
+      <tr class="linkage">
+        <td style="width: 40%"><h3 class="linkage">Key Type:</h3></td>
+        <td class="linkage"><select name="kt2" [(ngModel)]="keyType2" formControlName="type2" required>
+            <option *ngFor="let type of keyTypes" value={{type.type}}>{{type.type}}</option>
+          </select>
+        </td>
+      </tr>
+      <tr class="linkage">
+        <td style="width: 40%"><h3 class="linkage">Security ID:</h3></td>
+        <td class="linkage"><input [(ngModel)]="securityID2" name="sid2" (input)="securityID2=formatInput(securityID2,keyType2)" formControlName="key2" required minlength="9"></td>
+      </tr>
+    </table>
+    <hr color="rgb(71, 71, 71)">
+    <h2>Associated Meta Data</h2>
+    <hr color="rgb(71, 71, 71)">
+    <table class="meta">
+      <tr>
+        <th></th>
+        <th style="text-align: left; padding-inline-start: 2px">Key</th>
+        <th style="text-align: left; padding-inline-start: 2px">Value</th>
+      </tr>
+      <tr>
+        <td> <input type="button" (click)="addMetaData()" value="Add Pair"></td>
+        <td> <input placeholder="key" [(ngModel)]="metaKey" [ngModelOptions]="{standalone: true}"></td>
+        <td> <input placeholder="value" [(ngModel)]="metaValue" [ngModelOptions]="{standalone: true}"></td>
+      </tr>
+      <tr><td><br /></td><td><br /></td><td><br /></td></tr>
+      <tr *ngFor="let meta of metas | keyvalue">
+        <td style="border-block-start: 1px solid; border-block-end: 1px solid; border-inline-start: 8px solid; padding: 5px; text-align: center"><button (click)="deleteMetaData(meta.key)">X</button></td>
+        <td style="border-block-start: 1px solid; border-block-end: 1px solid; padding: 5px">{{meta.key}}</td>
+        <td style="border-block-start: 1px solid; border-block-end: 1px solid; border-inline-end: 8px solid; padding: 5px">{{meta.value}}</td>
+      </tr>
+    </table>
+    <hr color="rgb(71, 71, 71)">
+    <button type="Submit" [disabled]="!linkForm.valid" >Store Linkage</button>
+  </form>
+</fieldset>
+<router-outlet></router-outlet>

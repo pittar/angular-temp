@@ -1,0 +1,20 @@
+th, td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid rgb(124, 124, 124);
+  }
+  table{
+    border-collapse: collapse;
+    border: 3px solid rgb(58, 58, 58);;
+     background-image: linear-gradient(to bottom right, rgb(202, 235, 255), rgb(243, 243, 243));
+  }
+
+  legend{
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  fieldset{
+    
+    border: 2px solid rgb(58, 58, 58);
+  }

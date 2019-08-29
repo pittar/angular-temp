@@ -1,0 +1,56 @@
+<fieldset title="Source Record Data">
+  <legend>Source Record Data</legend>
+  <form class="entry-form" [formGroup]="searchForm" (ngSubmit)="submit()">
+
+    <table>
+
+      <tr>
+        <td>
+          <h4>Search As:</h4>
+        </td>
+        <td><select [(ngModel)]="selectedType" name="type" formControlName="authorization" required>
+            <option value="Admin">Admin</option>
+            <option *ngFor="let type of linkageTypes" value={{type.type}}>{{type.type}}</option>
+          </select></td>
+      </tr>
+
+      <tr>
+        <td>
+          <h4>Program Name: </h4>
+        </td>
+        <td>
+          <select name="sm" [(ngModel)]="selectedProgram" formControlName="programName" required>
+            <option *ngFor="let program of programs" value={{program.name}}>{{program.name}}</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <h4>Key Type (optional):</h4>
+        </td>
+        <td>
+          <select name="kt2" [(ngModel)]="selectedKeyType" formControlName="keyType" >
+            <option *ngFor="let type of keyTypes" value={{type.type}}>{{type.type}}</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <h4>Security ID:</h4>
+        </td>
+        <td>
+          <input [(ngModel)]="securityID" type="text" name="sid" (input)="securityID=formatInput(securityID, selectedKeyType)" required minlength="3" formControlName="key">
+        </td>
+      </tr>
+
+      <tr>
+        <td><button type="submit" [disabled]="!searchForm.valid">Search</button></td>
+      </tr>
+
+    </table>
+  </form>
+</fieldset>
+<hr>
+<router-outlet></router-outlet>

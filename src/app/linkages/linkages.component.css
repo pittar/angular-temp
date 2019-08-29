@@ -1,0 +1,27 @@
+
+  h3{
+    padding-inline-start: 25px
+  }
+  
+  table{
+    padding: 15px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  legend{
+    font-size: 18px;
+  }
+  
+  fieldset{
+    border: 1px solid rgb(58, 58, 58);
+  }
+  form{
+    padding-bottom: 2px;
+    padding-left: 15px;
+  }
+  h2
+{
+  padding-inline-start: 10px;
+  font-size: 22px; 
+  color: rgb(71, 71, 71)
+}

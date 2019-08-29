@@ -1,0 +1,15 @@
+<app-search></app-search>
+<fieldset title="Authorized Linkage Targets">
+  <legend>Authorized Linkage Targets</legend>
+<table style="width:100%">
+  <tr>
+      <th>Name</th>
+    </tr>
+    <tr *ngFor="let program of programs" >
+      <td>{{program.name}}</td>
+    </tr>
+
+</table>
+</fieldset>
+<hr>
+<router-outlet></router-outlet>

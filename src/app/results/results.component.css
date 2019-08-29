@@ -1,0 +1,14 @@
+form{
+    padding-bottom: 2px;
+    padding-left: 15px;
+  }
+  legend{
+    font-size: 18px;
+    
+  }
+  fieldset{
+    border: 2px solid rgb(58, 58, 58);
+  }
+  td{
+    padding-right: 25px;
+  }

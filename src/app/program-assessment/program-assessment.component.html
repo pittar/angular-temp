@@ -1,0 +1,87 @@
+<p></p>
+<fieldset title="Program Assessment" style="border: 2px solid rgb(58, 58, 58)">
+  <legend style="font-weight: bold;">Program Assessment</legend>
+
+  <p></p>
+  <h3></h3>
+
+  <select [(ngModel)]="selected_program_id" (change)="updateLinkages()" class="selection">
+    <option value=-1>All Programs</option>
+    <option *ngFor="let program of programs" value={{program.id}}>{{program.name}}</option>
+  </select>
+
+  <select [(ngModel)]="selected_type_name" (change)="updateLinkages()" class="selection">
+    <option value="All Types">All Types</option>
+    <option *ngFor="let type of linkageTypes" value={{type.type}}>{{type.type}}</option>
+    <option value="Transitive">Transitive</option>
+  </select>
+
+  <h2></h2>
+
+  <div class="container">
+    <div class="item">
+      <table class="linkages">
+        <tr class="linkages">
+          <th class="linkages">Program ID</th>
+          <th class="linkages">Key Type</th>
+          <th class="linkages">Linked IDs</th>
+          <th class="linkages">Linkage Type</th>
+          <th class="linkages">Confidence Level</th>
+        </tr>
+        <tr class="linkages" *ngFor="let link of linkages" (click)="row_click(link)"
+          [style.background-color]="getBackgroundColor(link)">
+          <td *ngIf="link.key2.split(' ').join('').replace(' ','')===securityID && link.program2===programID" class="linkages">
+            {{programs[link.program1-1].name}}</td>
+          <td *ngIf="link.key1.split(' ').join('').replace(' ','')===securityID && link.program1===programID" class="linkages">
+            {{programs[link.program2-1].name}}</td>
+          <td *ngIf="link.key2.split(' ').join('').replace(' ','') ===securityID && link.program2===programID" class="linkages">{{link.key1_type}}</td>
+          <td *ngIf="link.key1.split(' ').join('').replace(' ','')===securityID && link.program1===programID" class="linkages">{{link.key2_type}}</td>
+          <td *ngIf="link.key2.split(' ').join('').replace(' ','')===securityID && link.program2===programID" class="linkages">{{link.key1}}</td>
+          <td *ngIf="link.key1.split(' ').join('').replace(' ','')===securityID && link.program1===programID" class="linkages">{{link.key2}}</td>
+          <td class="linkages">{{link.type}}</td>
+          <td class="linkages">{{link.confidenceLevel}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="item">
+      <table class="meta">
+        <tr class="meta">
+          <th class="meta">Associated MetaData</th>
+        </tr>
+        <tr class="meta">
+          <td class="meta">{{metaData.metaData}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- this code was not removed on purpose
+    <mat-radio-group
+      class="class-radio-group"
+      [(ngModel)]="selected_program">
+  <table style="width:100%" class="programs_table" >
+      
+      <tr style="background-image: linear-gradient(to bottom , rgb(214, 214, 214), rgb(130, 220, 255));">
+      <th class="programs_table" style="width: 60%;border-bottom: 3px solid;">Name</th>
+      <th class="programs_table" style="width: 20%;border-bottom: 3px solid;">Assessment</th> 
+      <th class="programs_table" style="width: 20%;border-bottom: 3px solid;">Certainty</th>
+      <th class="programs_table" style="width: 15%;border-bottom: 3px solid;">Select</th>
+    </tr>
+    
+
+    <tr *ngFor="let program of programs" class="programs_table" (click)="row_click(program)" [style.background-color] = "getBackgroundColor(program)" >
+      <td class="programs_table" style="width: 60%;">{{program.name}}</td>
+      <td class="programs_table" style="width: 20%;">{{program.assessment}}</td> 
+      <td class="programs_table" style="width: 20%;">{{program.certainty}} %</td>
+      <td class="programs_table" style="width: 15%;">
+        <mat-checkbox [(ngModel)] = "program.select"></mat-checkbox></td>
+    </tr>
+    
+
+  </table>
+</mat-radio-group>-->
+
+</fieldset>
+<p></p>
+<router-outlet></router-outlet>
+<!--<h2 style="text-align: center;"> <button (click)= "link()" routerLink="/linkages" style="padding: 10px; border: 2px solid">Link to Target</button></h2>-->
