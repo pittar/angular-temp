@@ -5,6 +5,12 @@ try {
     def gitContextDir=env.GIT_CONTEXT_DIR
     def project=""
     node("jenkins-slave-npm") {
+
+        String projectQuery = sh (
+            script: 'oc get projects',
+            returnStdout: true
+        ).trim()
+
         stage("Initialize") {
             project = env.PROJECT_NAME
             echo "appName: ${appName}"
