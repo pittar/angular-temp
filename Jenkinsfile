@@ -11,6 +11,27 @@ try {
             echo "gitSourceUrl: ${gitSourceUrl}"
             echo "gitSourceUrl: ${gitSourceUrl}"
             echo "gitSourceRef: ${gitSourceRef}"
+            echo "gitContextDir: ${gitContextDir}"
+            echo "Create projects..."
+            openshift.withProject() {
+                if (!projectQuery.contains(appName)) {
+                    stage ('Creating Project') {
+                        echo "Create a Project!"
+                        // To grant the jenkins serviceaccount self provisioner cluster role run:
+                        //$ oc adm policy add-cluster-role-to-user self-provisioner system:serviceaccount:cicd:jenkins -n cicd
+                        print "Creating project ${appName}-dev"
+                        sh "oc new-project ${appName}-dev"
+                        print "Creating project ${appName}-qa"
+                        sh "oc new-project ${appName}-qa"
+
+                        print "Updating service account permissions"
+                        sh "oc policy add-role-to-group edit developer -n ${appName}-dev"
+                        sh "oc policy add-role-to-group edit developer -n ${appName}-qa"
+                        sh "oc policy add-role-to-user system:image-puller system:serviceaccount:${appName}-dev:default -n cicd"
+                        sh "oc policy add-role-to-user system:image-puller system:serviceaccount:${appName}-qa:default -n cicd"
+                    }
+                }
+            }
         }
         stage("Checkout") {
             echo "Checkout source."
@@ -41,7 +62,8 @@ try {
         stage("Deploy DEV") {
             echo "Deploy to DEV."
             openshift.withCluster() {
-                openshift.withProject('app-dev') {
+                echo "Hello from ${openshift.cluster()}'s default project: ${openshift.project()}"
+                openshift.withProject("${appName}-dev") {
                     def deploymentsExists = openshift.selector( "dc", "${appName}").exists()
                     if (!deploymentsExists) {
                             echo "Deployments do not yet exist.  Create the environment."
@@ -70,7 +92,7 @@ try {
         stage("Deploy QA") {
             echo "Deploy to QA"
             openshift.withCluster() {
-                openshift.withProject('app-qa') {
+                openshift.withProject("${appName}-dev") {
                     def deploymentsExists = openshift.selector( "dc", "${appName}").exists()
                     if (!deploymentsExists) {
                             echo "Deployments do not yet exist.  Create the environment."
